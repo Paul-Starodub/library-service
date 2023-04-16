@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "book",
     "user",
+    "borrowing",
 ]
 
 MIDDLEWARE = [
@@ -142,7 +143,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=345),  # default 5
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=25),  # default=5
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": True,
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZE",
