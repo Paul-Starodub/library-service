@@ -1,8 +1,11 @@
 from typing import Type, Optional
 
 from django.db.models import QuerySet
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, mixins, status
 from rest_framework.decorators import action
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -19,6 +22,11 @@ from borrowing.serializers import (
 )
 
 
+class OrderPagination(PageNumberPagination):
+    page_size = 5
+    max_page_size = 100
+
+
 class BorrowingViewSet(
     mixins.ListModelMixin,
     mixins.CreateModelMixin,
@@ -27,6 +35,7 @@ class BorrowingViewSet(
 ):
     serializer_class = BorrowingSerializer
     permission_classes = (IsAuthenticated,)
+    pagination_class = OrderPagination
 
     def get_queryset(self) -> QuerySet:
         queryset = Borrowing.objects.select_related("book", "user")
@@ -74,6 +83,23 @@ class BorrowingViewSet(
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                "is_active",
+                type=OpenApiTypes.BOOL,
+                description="Filtering by active borrowing (ex. ?is_active=true)",
+            ),
+            OpenApiParameter(
+                "user_id",
+                type=OpenApiTypes.NUMBER,
+                description="Filtering by specified user (ex. ?user_id=4)",
+            ),
+        ]
+    )
+    def list(self, request: Request, *args: tuple, **kwargs: dict) -> Response:
+        return super().list(request, *args, **kwargs)
 
     def perform_create(self, serializer: Serializer) -> None:
         serializer.save(user=self.request.user)
