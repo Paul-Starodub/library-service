@@ -58,3 +58,6 @@ class Borrowing(models.Model):
 
     def __str__(self) -> str:
         return f"{self.user}: {self.book.title}"
+
+    class Meta:
+        ordering = ["-borrow_date"]
