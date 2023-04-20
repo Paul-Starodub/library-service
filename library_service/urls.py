@@ -24,6 +24,7 @@ from drf_spectacular.views import (
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("__debug__/", include("debug_toolbar.urls")),
     path("api/library/", include("book.urls", namespace="library")),
     path("api/users/", include("user.urls", namespace="user")),
     path("api/library/", include("borrowing.urls", namespace="borrowing")),
