@@ -6,7 +6,6 @@ from rest_framework import serializers
 from book.serializers import BookSerializer
 from borrowing.models import Borrowing
 from borrowing.telegram_notigication import borrowing_telegram_notification
-from library_service import settings
 from user.serializers import UserSerializer
 
 
@@ -59,9 +58,7 @@ class BorrowingCreateSerializer(BorrowingSerializer):
             f"{book_borrowing} was borrowed by the user "
             f"{validated_data.get('user')}. Expected return date {validated_data.get('expected_return_date')}"
         )
-        borrowing_telegram_notification(
-            settings.TELEGRAM_TOKEN, settings.TELEGRAM_CHAT_ID, message=message
-        )
+        borrowing_telegram_notification(message=message)
 
         return super().create(validated_data)
 
