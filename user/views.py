@@ -16,7 +16,6 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
     """Update user witch already login"""
 
     serializer_class = UserSerializer
-    permission_classes = (IsAuthenticated,)
 
     def get_object(self) -> User:
         return self.request.user
