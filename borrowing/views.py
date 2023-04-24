@@ -3,7 +3,7 @@ from typing import Type, Optional
 from django.db.models import QuerySet
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema, OpenApiParameter
-from rest_framework import viewsets, mixins, status
+from rest_framework import viewsets, mixins, status, generics
 from rest_framework.decorators import action
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
@@ -19,7 +19,9 @@ from borrowing.serializers import (
     BorrowingCreateSerializer,
     BorrowingDetailSerializer,
     BorrowingReturnSerializer,
+    PaymentSerializer,
 )
+from borrowing.utils import CustomQuerySet
 
 
 class OrderPagination(PageNumberPagination):
@@ -34,7 +36,6 @@ class BorrowingViewSet(
     viewsets.GenericViewSet,
 ):
     serializer_class = BorrowingSerializer
-    permission_classes = (IsAuthenticated,)
     pagination_class = OrderPagination
 
     def get_queryset(self) -> QuerySet:
@@ -103,3 +104,11 @@ class BorrowingViewSet(
 
     def perform_create(self, serializer: Serializer) -> None:
         serializer.save(user=self.request.user)
+
+
+class PaymentListView(CustomQuerySet, generics.ListCreateAPIView):
+    serializer_class = PaymentSerializer
+
+
+class PaymentDetailView(CustomQuerySet, generics.RetrieveAPIView):
+    serializer_class = PaymentSerializer
