@@ -4,8 +4,16 @@ from typing import Optional, Type
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import QuerySet
 
 from book.models import Book
+
+
+class CustomBorrowingManager(models.Manager):
+    """Manager for reduce queries for db"""
+
+    def all(self) -> QuerySet["Borrowing"]:
+        return self.get_queryset().select_related("book", "user")
 
 
 class Borrowing(models.Model):
@@ -18,6 +26,8 @@ class Borrowing(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="borrowings"
     )
+
+    objects = CustomBorrowingManager()
 
     def validate_return_dates(
         self,
@@ -61,3 +71,25 @@ class Borrowing(models.Model):
 
     class Meta:
         ordering = ["-borrow_date"]
+
+
+class Payment(models.Model):
+    """Payment model"""
+
+    class EnumStatus(models.TextChoices):
+        PENDING = "pending"
+        PAID = "paid"
+
+    class EnumType(models.TextChoices):
+        PAYMENT = "payment"
+        FINE = "fine"
+
+    status = models.CharField(max_length=7, choices=EnumStatus.choices)
+    type = models.CharField(max_length=7, choices=EnumType.choices)
+    borrowing = models.ForeignKey(Borrowing, on_delete=models.CASCADE)
+    session_url = models.URLField(max_length=250)
+    session_id = models.CharField(max_length=250)
+    money_to_pay = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return f"Payment {self.id} ({self.borrowing.book.title})"

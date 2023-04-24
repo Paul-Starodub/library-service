@@ -2,9 +2,10 @@ import datetime
 
 from django.db import transaction
 from rest_framework import serializers
+from rest_framework.generics import get_object_or_404
 
 from book.serializers import BookSerializer
-from borrowing.models import Borrowing
+from borrowing.models import Borrowing, Payment
 from borrowing.telegram_notification import borrowing_telegram_notification
 from user.serializers import UserSerializer
 
@@ -92,3 +93,17 @@ class BorrowingReturnSerializer(BorrowingSerializer):
 
         borrowing = super().update(instance, validated_data)
         return borrowing
+
+
+class PaymentSerializer(BorrowingListSerializer):
+    class Meta:
+        model = Payment
+        fields = (
+            "id",
+            "borrowing",
+            "status",
+            "type",
+            "session_url",
+            "session_id",
+            "money_to_pay",
+        )
