@@ -4,10 +4,11 @@ from book.models import Book
 from borrowing.models import Borrowing
 from user.models import User
 
-permission_date = datetime.date.today() + datetime.timedelta(days=1)
-
 
 def filtering_borrowing():
+    """Filtering data"""
+
+    permission_date = datetime.date.today() + datetime.timedelta(days=1)
     expired_borrowings = Borrowing.objects.filter(
         actual_return_date__isnull=True, expected_return_date__lte=permission_date
     ).select_related("book", "user")
