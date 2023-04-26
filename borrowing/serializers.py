@@ -2,10 +2,10 @@ import datetime
 
 from django.db import transaction
 from rest_framework import serializers
-from rest_framework.generics import get_object_or_404
 
 from book.serializers import BookSerializer
 from borrowing.models import Borrowing, Payment
+from borrowing.stripe import create_stripe_session
 from borrowing.telegram_notification import borrowing_telegram_notification
 from user.serializers import UserSerializer
 
@@ -48,15 +48,33 @@ class BorrowingCreateSerializer(BorrowingSerializer):
 
     @transaction.atomic()
     def create(self, validated_data: dict) -> Borrowing:
-        book_borrowing = validated_data.get("book")
+        borrowing = Borrowing.objects.create(**validated_data)
 
-        if book_borrowing.inventory == 0:
+        # update book_inventory
+        book = borrowing.book
+
+        if book.inventory == 0:
             raise serializers.ValidationError("This book is currently out of stock.")
 
-        book_borrowing.inventory -= 1
-        book_borrowing.save()
+        book.inventory -= 1
+        book.save()
+
+        # getting session_url & session_id
+        session_url, session_id = create_stripe_session(borrowing)
+
+        # create payment
+        Payment.objects.create(
+            status="PENDING",
+            type="PAYMENT",
+            borrowing=borrowing,
+            session_url=session_url,
+            session_id=session_id,
+            money_to_pay=book.daily_fee,
+        )
+
+        # sending message via telegram bot
         message = (
-            f"{book_borrowing} was borrowed by the user "
+            f"{book.title} was borrowed by the user "
             f"{validated_data.get('user')}. Expected return date {validated_data.get('expected_return_date')}"
         )
         borrowing_telegram_notification(message=message)
@@ -95,7 +113,7 @@ class BorrowingReturnSerializer(BorrowingSerializer):
         return borrowing
 
 
-class PaymentSerializer(BorrowingListSerializer):
+class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = (
@@ -107,3 +125,7 @@ class PaymentSerializer(BorrowingListSerializer):
             "session_id",
             "money_to_pay",
         )
+
+
+class PaymentListSerializer(PaymentSerializer):
+    borrowing = BorrowingListSerializer()

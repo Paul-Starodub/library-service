@@ -5,8 +5,9 @@ from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import viewsets, mixins, status, generics
 from rest_framework.decorators import action
+from rest_framework.exceptions import ValidationError
+from rest_framework.generics import get_object_or_404
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
@@ -20,6 +21,7 @@ from borrowing.serializers import (
     BorrowingDetailSerializer,
     BorrowingReturnSerializer,
     PaymentSerializer,
+    PaymentListSerializer,
 )
 from borrowing.utils import CustomQuerySet
 
@@ -108,6 +110,35 @@ class BorrowingViewSet(
 
 class PaymentListView(CustomQuerySet, generics.ListCreateAPIView):
     serializer_class = PaymentSerializer
+
+    def create(
+        self, request: Request, *args: tuple, **kwargs: dict
+    ) -> Response | ValidationError:
+        borrowing_id = request.data["borrowing"]
+        borrowing = get_object_or_404(Borrowing, id=borrowing_id)
+        borrowing_user = borrowing.user_id
+
+        if request.user.id != borrowing_user:
+            raise ValidationError("You cannot pay instead of another user!")
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
+
+    def list(self, request: Request, *args: tuple, **kwargs: dict) -> Response:
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = PaymentListSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class PaymentDetailView(CustomQuerySet, generics.RetrieveAPIView):
