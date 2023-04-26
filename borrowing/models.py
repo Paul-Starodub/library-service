@@ -86,9 +86,11 @@ class Payment(models.Model):
 
     status = models.CharField(max_length=7, choices=EnumStatus.choices)
     type = models.CharField(max_length=7, choices=EnumType.choices)
-    borrowing = models.ForeignKey(Borrowing, on_delete=models.CASCADE)
-    session_url = models.URLField(max_length=250)
-    session_id = models.CharField(max_length=250)
+    borrowing = models.ForeignKey(
+        Borrowing, on_delete=models.CASCADE, related_name="payments"
+    )
+    session_url = models.URLField(max_length=250, null=True, blank=True)
+    session_id = models.CharField(max_length=250, null=True, blank=True)
     money_to_pay = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
