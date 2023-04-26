@@ -130,7 +130,9 @@ class PaymentListView(CustomQuerySet, generics.ListCreateAPIView):
         )
 
     def list(self, request: Request, *args: tuple, **kwargs: dict) -> Response:
-        queryset = self.filter_queryset(self.get_queryset())
+        queryset = self.filter_queryset(self.get_queryset()).select_related(
+            "borrowing__book", "borrowing__user"
+        )
 
         page = self.paginate_queryset(queryset)
         if page is not None:
