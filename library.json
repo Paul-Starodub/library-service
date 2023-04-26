@@ -1,615 +1,1040 @@
 [
-  {
-    "model":"auth.permission",
-    "pk":1,
-    "fields":{
-      "name":"Can add log entry",
-      "content_type":1,
-      "codename":"add_logentry"
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2023-04-26T05:59:15.016Z",
+        "user": 1,
+        "content_type": 7,
+        "object_id": "1",
+        "object_repr": "every minute",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":2,
-    "fields":{
-      "name":"Can change log entry",
-      "content_type":1,
-      "codename":"change_logentry"
+},
+{
+    "model": "admin.logentry",
+    "pk": 2,
+    "fields": {
+        "action_time": "2023-04-26T05:59:27.574Z",
+        "user": 1,
+        "content_type": 8,
+        "object_id": "1",
+        "object_repr": "Books: every minute",
+        "action_flag": 1,
+        "change_message": "[{\"added\": {}}]"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":3,
-    "fields":{
-      "name":"Can delete log entry",
-      "content_type":1,
-      "codename":"delete_logentry"
+},
+{
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": 1,
+        "codename": "add_logentry"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":4,
-    "fields":{
-      "name":"Can view log entry",
-      "content_type":1,
-      "codename":"view_logentry"
+},
+{
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": 1,
+        "codename": "change_logentry"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":5,
-    "fields":{
-      "name":"Can add permission",
-      "content_type":2,
-      "codename":"add_permission"
+},
+{
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": 1,
+        "codename": "delete_logentry"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":6,
-    "fields":{
-      "name":"Can change permission",
-      "content_type":2,
-      "codename":"change_permission"
+},
+{
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": 1,
+        "codename": "view_logentry"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":7,
-    "fields":{
-      "name":"Can delete permission",
-      "content_type":2,
-      "codename":"delete_permission"
+},
+{
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+        "name": "Can add permission",
+        "content_type": 2,
+        "codename": "add_permission"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":8,
-    "fields":{
-      "name":"Can view permission",
-      "content_type":2,
-      "codename":"view_permission"
+},
+{
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+        "name": "Can change permission",
+        "content_type": 2,
+        "codename": "change_permission"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":9,
-    "fields":{
-      "name":"Can add group",
-      "content_type":3,
-      "codename":"add_group"
+},
+{
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": 2,
+        "codename": "delete_permission"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":10,
-    "fields":{
-      "name":"Can change group",
-      "content_type":3,
-      "codename":"change_group"
+},
+{
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+        "name": "Can view permission",
+        "content_type": 2,
+        "codename": "view_permission"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":11,
-    "fields":{
-      "name":"Can delete group",
-      "content_type":3,
-      "codename":"delete_group"
+},
+{
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+        "name": "Can add group",
+        "content_type": 3,
+        "codename": "add_group"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":12,
-    "fields":{
-      "name":"Can view group",
-      "content_type":3,
-      "codename":"view_group"
+},
+{
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+        "name": "Can change group",
+        "content_type": 3,
+        "codename": "change_group"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":13,
-    "fields":{
-      "name":"Can add content type",
-      "content_type":4,
-      "codename":"add_contenttype"
+},
+{
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+        "name": "Can delete group",
+        "content_type": 3,
+        "codename": "delete_group"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":14,
-    "fields":{
-      "name":"Can change content type",
-      "content_type":4,
-      "codename":"change_contenttype"
+},
+{
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+        "name": "Can view group",
+        "content_type": 3,
+        "codename": "view_group"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":15,
-    "fields":{
-      "name":"Can delete content type",
-      "content_type":4,
-      "codename":"delete_contenttype"
+},
+{
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+        "name": "Can add content type",
+        "content_type": 4,
+        "codename": "add_contenttype"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":16,
-    "fields":{
-      "name":"Can view content type",
-      "content_type":4,
-      "codename":"view_contenttype"
+},
+{
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+        "name": "Can change content type",
+        "content_type": 4,
+        "codename": "change_contenttype"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":17,
-    "fields":{
-      "name":"Can add session",
-      "content_type":5,
-      "codename":"add_session"
+},
+{
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": 4,
+        "codename": "delete_contenttype"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":18,
-    "fields":{
-      "name":"Can change session",
-      "content_type":5,
-      "codename":"change_session"
+},
+{
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+        "name": "Can view content type",
+        "content_type": 4,
+        "codename": "view_contenttype"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":19,
-    "fields":{
-      "name":"Can delete session",
-      "content_type":5,
-      "codename":"delete_session"
+},
+{
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+        "name": "Can add session",
+        "content_type": 5,
+        "codename": "add_session"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":20,
-    "fields":{
-      "name":"Can view session",
-      "content_type":5,
-      "codename":"view_session"
+},
+{
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+        "name": "Can change session",
+        "content_type": 5,
+        "codename": "change_session"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":21,
-    "fields":{
-      "name":"Can add book",
-      "content_type":6,
-      "codename":"add_book"
+},
+{
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+        "name": "Can delete session",
+        "content_type": 5,
+        "codename": "delete_session"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":22,
-    "fields":{
-      "name":"Can change book",
-      "content_type":6,
-      "codename":"change_book"
+},
+{
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+        "name": "Can view session",
+        "content_type": 5,
+        "codename": "view_session"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":23,
-    "fields":{
-      "name":"Can delete book",
-      "content_type":6,
-      "codename":"delete_book"
+},
+{
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+        "name": "Can add crontab",
+        "content_type": 6,
+        "codename": "add_crontabschedule"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":24,
-    "fields":{
-      "name":"Can view book",
-      "content_type":6,
-      "codename":"view_book"
+},
+{
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+        "name": "Can change crontab",
+        "content_type": 6,
+        "codename": "change_crontabschedule"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":25,
-    "fields":{
-      "name":"Can add user",
-      "content_type":7,
-      "codename":"add_user"
+},
+{
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+        "name": "Can delete crontab",
+        "content_type": 6,
+        "codename": "delete_crontabschedule"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":26,
-    "fields":{
-      "name":"Can change user",
-      "content_type":7,
-      "codename":"change_user"
+},
+{
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+        "name": "Can view crontab",
+        "content_type": 6,
+        "codename": "view_crontabschedule"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":27,
-    "fields":{
-      "name":"Can delete user",
-      "content_type":7,
-      "codename":"delete_user"
+},
+{
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+        "name": "Can add interval",
+        "content_type": 7,
+        "codename": "add_intervalschedule"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":28,
-    "fields":{
-      "name":"Can view user",
-      "content_type":7,
-      "codename":"view_user"
+},
+{
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+        "name": "Can change interval",
+        "content_type": 7,
+        "codename": "change_intervalschedule"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":29,
-    "fields":{
-      "name":"Can add borrowing",
-      "content_type":8,
-      "codename":"add_borrowing"
+},
+{
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+        "name": "Can delete interval",
+        "content_type": 7,
+        "codename": "delete_intervalschedule"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":30,
-    "fields":{
-      "name":"Can change borrowing",
-      "content_type":8,
-      "codename":"change_borrowing"
+},
+{
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+        "name": "Can view interval",
+        "content_type": 7,
+        "codename": "view_intervalschedule"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":31,
-    "fields":{
-      "name":"Can delete borrowing",
-      "content_type":8,
-      "codename":"delete_borrowing"
+},
+{
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+        "name": "Can add periodic task",
+        "content_type": 8,
+        "codename": "add_periodictask"
     }
-  },
-  {
-    "model":"auth.permission",
-    "pk":32,
-    "fields":{
-      "name":"Can view borrowing",
-      "content_type":8,
-      "codename":"view_borrowing"
+},
+{
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+        "name": "Can change periodic task",
+        "content_type": 8,
+        "codename": "change_periodictask"
     }
-  },
-  {
-    "model":"contenttypes.contenttype",
-    "pk":1,
-    "fields":{
-      "app_label":"admin",
-      "model":"logentry"
+},
+{
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+        "name": "Can delete periodic task",
+        "content_type": 8,
+        "codename": "delete_periodictask"
     }
-  },
-  {
-    "model":"contenttypes.contenttype",
-    "pk":2,
-    "fields":{
-      "app_label":"auth",
-      "model":"permission"
+},
+{
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+        "name": "Can view periodic task",
+        "content_type": 8,
+        "codename": "view_periodictask"
     }
-  },
-  {
-    "model":"contenttypes.contenttype",
-    "pk":3,
-    "fields":{
-      "app_label":"auth",
-      "model":"group"
+},
+{
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+        "name": "Can add periodic tasks",
+        "content_type": 9,
+        "codename": "add_periodictasks"
     }
-  },
-  {
-    "model":"contenttypes.contenttype",
-    "pk":4,
-    "fields":{
-      "app_label":"contenttypes",
-      "model":"contenttype"
+},
+{
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+        "name": "Can change periodic tasks",
+        "content_type": 9,
+        "codename": "change_periodictasks"
     }
-  },
-  {
-    "model":"contenttypes.contenttype",
-    "pk":5,
-    "fields":{
-      "app_label":"sessions",
-      "model":"session"
+},
+{
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+        "name": "Can delete periodic tasks",
+        "content_type": 9,
+        "codename": "delete_periodictasks"
     }
-  },
-  {
-    "model":"contenttypes.contenttype",
-    "pk":6,
-    "fields":{
-      "app_label":"book",
-      "model":"book"
+},
+{
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+        "name": "Can view periodic tasks",
+        "content_type": 9,
+        "codename": "view_periodictasks"
     }
-  },
-  {
-    "model":"contenttypes.contenttype",
-    "pk":7,
-    "fields":{
-      "app_label":"user",
-      "model":"user"
+},
+{
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+        "name": "Can add solar event",
+        "content_type": 10,
+        "codename": "add_solarschedule"
     }
-  },
-  {
-    "model":"contenttypes.contenttype",
-    "pk":8,
-    "fields":{
-      "app_label":"borrowing",
-      "model":"borrowing"
+},
+{
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+        "name": "Can change solar event",
+        "content_type": 10,
+        "codename": "change_solarschedule"
     }
-  },
-  {
-    "model":"book.book",
-    "pk":1,
-    "fields":{
-      "title":"Red and black",
-      "author":"Stendhal",
-      "cover":"hard",
-      "inventory":21,
-      "daily_fee":"4.08"
+},
+{
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+        "name": "Can delete solar event",
+        "content_type": 10,
+        "codename": "delete_solarschedule"
     }
-  },
-  {
-    "model":"book.book",
-    "pk":2,
-    "fields":{
-      "title":"Blue fish",
-      "author":"Brown Bob",
-      "cover":"soft",
-      "inventory":11,
-      "daily_fee":"2.90"
+},
+{
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+        "name": "Can view solar event",
+        "content_type": 10,
+        "codename": "view_solarschedule"
     }
-  },
-  {
-    "model":"book.book",
-    "pk":3,
-    "fields":{
-      "title":"lion",
-      "author":"Brown Bob",
-      "cover":"hard",
-      "inventory":34,
-      "daily_fee":"5.07"
+},
+{
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+        "name": "Can add clocked",
+        "content_type": 11,
+        "codename": "add_clockedschedule"
     }
-  },
-  {
-    "model":"book.book",
-    "pk":4,
-    "fields":{
-      "title":"Bus for lady",
-      "author":"Shevchenko Taras",
-      "cover":"soft",
-      "inventory":5,
-      "daily_fee":"5.00"
+},
+{
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+        "name": "Can change clocked",
+        "content_type": 11,
+        "codename": "change_clockedschedule"
     }
-  },
-  {
-    "model":"book.book",
-    "pk":5,
-    "fields":{
-      "title":"Forest",
-      "author":"White John",
-      "cover":"soft",
-      "inventory":23,
-      "daily_fee":"4.67"
+},
+{
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+        "name": "Can delete clocked",
+        "content_type": 11,
+        "codename": "delete_clockedschedule"
     }
-  },
-  {
-    "model":"user.user",
-    "pk":1,
-    "fields":{
-      "password":"pbkdf2_sha256$600000$5Lsky0z5YxWTb6NPZXv8Fo$WU3fvZAPjVf7n/oBDl2F3v0dPS3xP4FqPOz/qgdxGd0=",
-      "last_login":null,
-      "is_superuser":true,
-      "first_name":"",
-      "last_name":"",
-      "is_staff":true,
-      "is_active":true,
-      "date_joined":"2023-04-15T20:25:53.550Z",
-      "email":"admin@gmail.com",
-      "groups":[],
-      "user_permissions":[]
+},
+{
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+        "name": "Can view clocked",
+        "content_type": 11,
+        "codename": "view_clockedschedule"
     }
-  },
-  {
-    "model":"user.user",
-    "pk":2,
-    "fields":{
-      "password":"pbkdf2_sha256$600000$xIuwea3O4cSZoxn08P9VRl$LRz5AH48dVeTBF0afoP+gXlaCFW9ROd7c/ISJkrByA4=",
-      "last_login":null,
-      "is_superuser":false,
-      "first_name":"",
-      "last_name":"",
-      "is_staff":false,
-      "is_active":true,
-      "date_joined":"2023-04-15T20:28:20.581Z",
-      "email":"postgres@gmail.com",
-      "groups":[],
-      "user_permissions":[]
+},
+{
+    "model": "auth.permission",
+    "pk": 45,
+    "fields": {
+        "name": "Can add book",
+        "content_type": 12,
+        "codename": "add_book"
     }
-  },
-  {
-    "model":"user.user",
-    "pk":3,
-    "fields":{
-      "password":"pbkdf2_sha256$600000$7HWtKaSk6uBJX5yw1KYaB0$RQphZjsOwmyZ6+n1moLfWnCIOZzcSkEJTVZOZlYizCE=",
-      "last_login":null,
-      "is_superuser":false,
-      "first_name":"",
-      "last_name":"",
-      "is_staff":false,
-      "is_active":true,
-      "date_joined":"2023-04-15T20:28:35.999Z",
-      "email":"natalia.monika.niedzwiecka@gmail.com",
-      "groups":[],
-      "user_permissions":[]
+},
+{
+    "model": "auth.permission",
+    "pk": 46,
+    "fields": {
+        "name": "Can change book",
+        "content_type": 12,
+        "codename": "change_book"
     }
-  },
-  {
-    "model":"user.user",
-    "pk":4,
-    "fields":{
-      "password":"pbkdf2_sha256$600000$iV8ninVdhwJnCcfbR2EeeO$8LhNQLzq9iD+Hd4CW/5NEJdTiK11uAUmxzEiyfH6Jyo=",
-      "last_login":null,
-      "is_superuser":false,
-      "first_name":"",
-      "last_name":"",
-      "is_staff":false,
-      "is_active":true,
-      "date_joined":"2023-04-15T20:28:56.414Z",
-      "email":"amorallex@gmail.com",
-      "groups":[],
-      "user_permissions":[]
+},
+{
+    "model": "auth.permission",
+    "pk": 47,
+    "fields": {
+        "name": "Can delete book",
+        "content_type": 12,
+        "codename": "delete_book"
     }
-  },
-  {
-    "model":"user.user",
-    "pk":5,
-    "fields":{
-      "password":"pbkdf2_sha256$600000$2Osi0jjibAhxraXFAp1Ex9$jXratOEFr7SQF/iBWCH84WteM84Zaz7URs0y/w1AZqA=",
-      "last_login":null,
-      "is_superuser":false,
-      "first_name":"",
-      "last_name":"",
-      "is_staff":false,
-      "is_active":true,
-      "date_joined":"2023-04-15T20:29:33.689Z",
-      "email":"morallex@gmail.com",
-      "groups":[],
-      "user_permissions":[]
+},
+{
+    "model": "auth.permission",
+    "pk": 48,
+    "fields": {
+        "name": "Can view book",
+        "content_type": 12,
+        "codename": "view_book"
     }
-  },
-  {
-    "model":"borrowing.borrowing",
-    "pk":1,
-    "fields":{
-      "borrow_date":"2023-04-15",
-      "expected_return_date":"2023-04-19",
-      "actual_return_date":"2023-05-05",
-      "book":1,
-      "user":4
+},
+{
+    "model": "auth.permission",
+    "pk": 49,
+    "fields": {
+        "name": "Can add user",
+        "content_type": 13,
+        "codename": "add_user"
     }
-  },
-  {
-    "model":"borrowing.borrowing",
-    "pk":2,
-    "fields":{
-      "borrow_date":"2023-04-15",
-      "expected_return_date":"2023-04-28",
-      "actual_return_date":null,
-      "book":4,
-      "user":4
+},
+{
+    "model": "auth.permission",
+    "pk": 50,
+    "fields": {
+        "name": "Can change user",
+        "content_type": 13,
+        "codename": "change_user"
     }
-  },
-  {
-    "model":"borrowing.borrowing",
-    "pk":3,
-    "fields":{
-      "borrow_date":"2023-04-15",
-      "expected_return_date":"2023-04-29",
-      "actual_return_date":"2023-04-29",
-      "book":2,
-      "user":4
+},
+{
+    "model": "auth.permission",
+    "pk": 51,
+    "fields": {
+        "name": "Can delete user",
+        "content_type": 13,
+        "codename": "delete_user"
     }
-  },
-  {
-    "model":"borrowing.borrowing",
-    "pk":4,
-    "fields":{
-      "borrow_date":"2023-04-15",
-      "expected_return_date":"2023-04-22",
-      "actual_return_date":null,
-      "book":5,
-      "user":3
+},
+{
+    "model": "auth.permission",
+    "pk": 52,
+    "fields": {
+        "name": "Can view user",
+        "content_type": 13,
+        "codename": "view_user"
     }
-  },
-  {
-    "model":"borrowing.borrowing",
-    "pk":5,
-    "fields":{
-      "borrow_date":"2023-04-15",
-      "expected_return_date":"2023-04-28",
-      "actual_return_date":null,
-      "book":1,
-      "user":3
+},
+{
+    "model": "auth.permission",
+    "pk": 53,
+    "fields": {
+        "name": "Can add borrowing",
+        "content_type": 14,
+        "codename": "add_borrowing"
     }
-  },
-  {
-    "model":"borrowing.borrowing",
-    "pk":6,
-    "fields":{
-      "borrow_date":"2023-04-15",
-      "expected_return_date":"2023-05-05",
-      "actual_return_date":null,
-      "book":2,
-      "user":2
+},
+{
+    "model": "auth.permission",
+    "pk": 54,
+    "fields": {
+        "name": "Can change borrowing",
+        "content_type": 14,
+        "codename": "change_borrowing"
     }
-  },
-  {
-    "model":"borrowing.borrowing",
-    "pk":7,
-    "fields":{
-      "borrow_date":"2023-04-15",
-      "expected_return_date":"2023-05-26",
-      "actual_return_date":null,
-      "book":1,
-      "user":2
+},
+{
+    "model": "auth.permission",
+    "pk": 55,
+    "fields": {
+        "name": "Can delete borrowing",
+        "content_type": 14,
+        "codename": "delete_borrowing"
     }
-  },
-  {
-    "model":"borrowing.borrowing",
-    "pk":8,
-    "fields":{
-      "borrow_date":"2023-04-15",
-      "expected_return_date":"2023-04-30",
-      "actual_return_date":null,
-      "book":3,
-      "user":5
+},
+{
+    "model": "auth.permission",
+    "pk": 56,
+    "fields": {
+        "name": "Can view borrowing",
+        "content_type": 14,
+        "codename": "view_borrowing"
     }
-  },
-  {
-    "model":"borrowing.borrowing",
-    "pk":9,
-    "fields":{
-      "borrow_date":"2023-04-15",
-      "expected_return_date":"2023-04-21",
-      "actual_return_date":"2023-04-29",
-      "book":5,
-      "user":2
+},
+{
+    "model": "auth.permission",
+    "pk": 57,
+    "fields": {
+        "name": "Can add payment",
+        "content_type": 15,
+        "codename": "add_payment"
     }
-  },
-  {
-    "model":"borrowing.borrowing",
-    "pk":10,
-    "fields":{
-      "borrow_date":"2023-04-15",
-      "expected_return_date":"2023-04-29",
-      "actual_return_date":null,
-      "book":4,
-      "user":2
+},
+{
+    "model": "auth.permission",
+    "pk": 58,
+    "fields": {
+        "name": "Can change payment",
+        "content_type": 15,
+        "codename": "change_payment"
     }
-  },
-  {
-    "model":"borrowing.borrowing",
-    "pk":11,
-    "fields":{
-      "borrow_date":"2023-04-15",
-      "expected_return_date":"2023-04-29",
-      "actual_return_date":null,
-      "book":3,
-      "user":4
+},
+{
+    "model": "auth.permission",
+    "pk": 59,
+    "fields": {
+        "name": "Can delete payment",
+        "content_type": 15,
+        "codename": "delete_payment"
     }
-  }
+},
+{
+    "model": "auth.permission",
+    "pk": 60,
+    "fields": {
+        "name": "Can view payment",
+        "content_type": 15,
+        "codename": "view_payment"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+        "app_label": "django_celery_beat",
+        "model": "crontabschedule"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+        "app_label": "django_celery_beat",
+        "model": "intervalschedule"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+        "app_label": "django_celery_beat",
+        "model": "periodictask"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+        "app_label": "django_celery_beat",
+        "model": "periodictasks"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+        "app_label": "django_celery_beat",
+        "model": "solarschedule"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 11,
+    "fields": {
+        "app_label": "django_celery_beat",
+        "model": "clockedschedule"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 12,
+    "fields": {
+        "app_label": "book",
+        "model": "book"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 13,
+    "fields": {
+        "app_label": "user",
+        "model": "user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 14,
+    "fields": {
+        "app_label": "borrowing",
+        "model": "borrowing"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 15,
+    "fields": {
+        "app_label": "borrowing",
+        "model": "payment"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "emzl80vvt8ol9ge3iacv77jp5w341aiy",
+    "fields": {
+        "session_data": ".eJxVjEEOwiAQRe_C2hCwAjMu3fcMZIBBqgaS0q6Md7dNutDte-__t_C0LsWvnWc_JXEVWpx-WaD45LqL9KB6bzK2usxTkHsiD9vl2BK_bkf7d1Col22dlQMAh3FgpbOhgZOO-YxkEQJZ2tglZkZyVqMODoJVOCCaZMAwk_h8AeZLN_o:1prYAm:Gn87UEaTES1P_DYQG4-5021uBmSEQWvZ5HvkVpmTopI",
+        "expire_date": "2023-05-10T05:58:36.137Z"
+    }
+},
+{
+    "model": "django_celery_beat.intervalschedule",
+    "pk": 1,
+    "fields": {
+        "every": 1,
+        "period": "minutes"
+    }
+},
+{
+    "model": "django_celery_beat.crontabschedule",
+    "pk": 1,
+    "fields": {
+        "minute": "0",
+        "hour": "4",
+        "day_of_week": "*",
+        "day_of_month": "*",
+        "month_of_year": "*",
+        "timezone": "Europe/Kyiv"
+    }
+},
+{
+    "model": "django_celery_beat.periodictasks",
+    "pk": 1,
+    "fields": {
+        "last_update": "2023-04-26T06:00:03.632Z"
+    }
+},
+{
+    "model": "django_celery_beat.periodictask",
+    "pk": 1,
+    "fields": {
+        "name": "Books",
+        "task": "borrowing.tasks.run_sync_with_api",
+        "interval": 1,
+        "crontab": null,
+        "solar": null,
+        "clocked": null,
+        "args": "[]",
+        "kwargs": "{}",
+        "queue": null,
+        "exchange": null,
+        "routing_key": null,
+        "headers": "{}",
+        "priority": null,
+        "expires": null,
+        "expire_seconds": null,
+        "one_off": false,
+        "start_time": "2023-04-26T05:59:23Z",
+        "enabled": true,
+        "last_run_at": "2023-04-26T06:02:03.682Z",
+        "total_run_count": 3,
+        "date_changed": "2023-04-26T06:02:20.895Z",
+        "description": ""
+    }
+},
+{
+    "model": "django_celery_beat.periodictask",
+    "pk": 2,
+    "fields": {
+        "name": "celery.backend_cleanup",
+        "task": "celery.backend_cleanup",
+        "interval": null,
+        "crontab": 1,
+        "solar": null,
+        "clocked": null,
+        "args": "[]",
+        "kwargs": "{}",
+        "queue": null,
+        "exchange": null,
+        "routing_key": null,
+        "headers": "{}",
+        "priority": null,
+        "expires": null,
+        "expire_seconds": 43200,
+        "one_off": false,
+        "start_time": null,
+        "enabled": true,
+        "last_run_at": null,
+        "total_run_count": 0,
+        "date_changed": "2023-04-26T06:00:03.632Z",
+        "description": ""
+    }
+},
+{
+    "model": "book.book",
+    "pk": 1,
+    "fields": {
+        "title": "Red subway",
+        "author": "Brown Bob",
+        "cover": "soft",
+        "inventory": 12,
+        "daily_fee": "5.07"
+    }
+},
+{
+    "model": "book.book",
+    "pk": 2,
+    "fields": {
+        "title": "Lion",
+        "author": "Stendhal",
+        "cover": "hard",
+        "inventory": 32,
+        "daily_fee": "4.67"
+    }
+},
+{
+    "model": "book.book",
+    "pk": 3,
+    "fields": {
+        "title": "Yellow submarine",
+        "author": "White John",
+        "cover": "soft",
+        "inventory": 12,
+        "daily_fee": "9.03"
+    }
+},
+{
+    "model": "book.book",
+    "pk": 4,
+    "fields": {
+        "title": "Dogs",
+        "author": "Brown Bob",
+        "cover": "soft",
+        "inventory": 112,
+        "daily_fee": "2.07"
+    }
+},
+{
+    "model": "book.book",
+    "pk": 5,
+    "fields": {
+        "title": "Kobzar",
+        "author": "Shevchenko Taras",
+        "cover": "soft",
+        "inventory": 66,
+        "daily_fee": "13.07"
+    }
+},
+{
+    "model": "user.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$joHcBoj81EcINW3t1X2W6W$E4xBTQ3bEaJRVBan2l059ngDa4q95Ab0jtfL0vIt19Y=",
+        "last_login": "2023-04-26T05:58:36.134Z",
+        "is_superuser": true,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-04-26T05:42:07.630Z",
+        "email": "admin@gmail.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "user.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$g3FbY4fSem8Ab1QwL5hYca$Roo8VN9guj77pcUZki7cEI5f3Lap/J2BLNcOMdv+GeI=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-04-26T05:46:06.176Z",
+        "email": "postgres@gmail.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "user.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$3NPxo4vsMBvSLCmeL5EW9J$J+URUX7ToQUxB6NjzmSviTZyNf2/YWqLb26xFzoTQOQ=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-04-26T05:46:33.517Z",
+        "email": "amorallex@gmail.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "user.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$ZYm10VZysY559Sv8xXOwIb$UHSuG8hDp0QoiHfoaE4v/wWx/pI/mrCj/PfqSJhQt4M=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-04-26T05:46:47.610Z",
+        "email": "natalia.monika.niedzwiecka@gmail.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "user.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$JoLrRxWAyQ6jeLibbElvFh$5OjZtiGcYWINZ0+Hf+2YLgVatetIkQTE4D297eV8XPg=",
+        "last_login": null,
+        "is_superuser": false,
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-04-26T05:47:03.947Z",
+        "email": "morallex@gmail.com",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "borrowing.borrowing",
+    "pk": 1,
+    "fields": {
+        "borrow_date": "2023-04-26",
+        "expected_return_date": "2023-05-06",
+        "actual_return_date": null,
+        "book": 1,
+        "user": 5
+    }
+},
+{
+    "model": "borrowing.borrowing",
+    "pk": 2,
+    "fields": {
+        "borrow_date": "2023-04-26",
+        "expected_return_date": "2023-06-02",
+        "actual_return_date": "2023-04-27",
+        "book": 4,
+        "user": 4
+    }
+},
+{
+    "model": "borrowing.borrowing",
+    "pk": 3,
+    "fields": {
+        "borrow_date": "2023-04-26",
+        "expected_return_date": "2023-07-21",
+        "actual_return_date": null,
+        "book": 5,
+        "user": 3
+    }
+},
+{
+    "model": "borrowing.borrowing",
+    "pk": 4,
+    "fields": {
+        "borrow_date": "2023-04-26",
+        "expected_return_date": "2023-07-21",
+        "actual_return_date": null,
+        "book": 3,
+        "user": 2
+    }
+},
+{
+    "model": "borrowing.borrowing",
+    "pk": 5,
+    "fields": {
+        "borrow_date": "2023-04-26",
+        "expected_return_date": "2023-09-22",
+        "actual_return_date": null,
+        "book": 2,
+        "user": 2
+    }
+},
+{
+    "model": "borrowing.borrowing",
+    "pk": 6,
+    "fields": {
+        "borrow_date": "2023-04-26",
+        "expected_return_date": "2023-09-22",
+        "actual_return_date": null,
+        "book": 2,
+        "user": 1
+    }
+},
+{
+    "model": "borrowing.borrowing",
+    "pk": 7,
+    "fields": {
+        "borrow_date": "2023-04-26",
+        "expected_return_date": "2023-06-03",
+        "actual_return_date": null,
+        "book": 5,
+        "user": 5
+    }
+},
+{
+    "model": "borrowing.borrowing",
+    "pk": 8,
+    "fields": {
+        "borrow_date": "2023-04-26",
+        "expected_return_date": "2023-04-29",
+        "actual_return_date": null,
+        "book": 3,
+        "user": 5
+    }
+},
+{
+    "model": "borrowing.borrowing",
+    "pk": 9,
+    "fields": {
+        "borrow_date": "2023-04-26",
+        "expected_return_date": "2023-04-27",
+        "actual_return_date": null,
+        "book": 4,
+        "user": 5
+    }
+},
+{
+    "model": "borrowing.borrowing",
+    "pk": 10,
+    "fields": {
+        "borrow_date": "2023-04-26",
+        "expected_return_date": "2023-04-27",
+        "actual_return_date": null,
+        "book": 1,
+        "user": 4
+    }
+},
+{
+    "model": "borrowing.borrowing",
+    "pk": 11,
+    "fields": {
+        "borrow_date": "2023-04-26",
+        "expected_return_date": "2023-04-27",
+        "actual_return_date": null,
+        "book": 3,
+        "user": 4
+    }
+}
 ]
