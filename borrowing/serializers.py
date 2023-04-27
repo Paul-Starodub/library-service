@@ -70,16 +70,16 @@ class BorrowingCreateSerializer(BorrowingSerializer):
 
     @transaction.atomic()
     def create(self, validated_data: dict) -> Borrowing:
-        borrowing = Borrowing.objects.create(**validated_data)
-
         # update book_inventory
-        book = borrowing.book
-
+        book = validated_data.get("book")
         if book.inventory == 0:
             raise serializers.ValidationError("This book is currently out of stock.")
 
         book.inventory -= 1
         book.save()
+
+        # create book
+        borrowing = Borrowing.objects.create(**validated_data)
 
         # getting session_url & session_id
         session_url, session_id = create_stripe_session(borrowing)
@@ -101,7 +101,7 @@ class BorrowingCreateSerializer(BorrowingSerializer):
         )
         borrowing_telegram_notification(message=message)
 
-        return super().create(validated_data)
+        return borrowing
 
     class Meta:
         model = Borrowing
