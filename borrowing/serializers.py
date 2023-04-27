@@ -111,6 +111,7 @@ class BorrowingCreateSerializer(BorrowingSerializer):
 class BorrowingDetailSerializer(BorrowingSerializer):
     book = BookSerializer(many=False, read_only=True)
     user = UserSerializer(many=False, read_only=True)
+    payments = PaymentSerializer(many=True, read_only=True)
 
 
 class BorrowingReturnSerializer(BorrowingSerializer):
