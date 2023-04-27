@@ -95,3 +95,6 @@ class Payment(models.Model):
 
     def __str__(self):
         return f"Payment {self.id} ({self.borrowing.book.title})"
+
+    class Meta:
+        ordering = ["-id"]
