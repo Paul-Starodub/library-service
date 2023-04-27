@@ -7,12 +7,12 @@ from rest_framework import viewsets, mixins, status, generics
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 
 from borrowing.models import Borrowing
+from borrowing.pagination import OrderPagination
 from borrowing.permissions import IsOwnerOrReadOnly
 from borrowing.serializers import (
     BorrowingSerializer,
@@ -21,14 +21,9 @@ from borrowing.serializers import (
     BorrowingDetailSerializer,
     BorrowingReturnSerializer,
     PaymentSerializer,
-    PaymentListSerializer,
+    PaymentCreateSerializer,
 )
 from borrowing.utils import CustomQuerySet
-
-
-class OrderPagination(PageNumberPagination):
-    page_size = 5
-    max_page_size = 100
 
 
 class BorrowingViewSet(
@@ -109,7 +104,8 @@ class BorrowingViewSet(
 
 
 class PaymentListView(CustomQuerySet, generics.ListCreateAPIView):
-    serializer_class = PaymentSerializer
+    serializer_class = PaymentCreateSerializer
+    pagination_class = OrderPagination
 
     def create(
         self, request: Request, *args: tuple, **kwargs: dict
@@ -136,10 +132,10 @@ class PaymentListView(CustomQuerySet, generics.ListCreateAPIView):
 
         page = self.paginate_queryset(queryset)
         if page is not None:
-            serializer = self.get_serializer(page, many=True)
+            serializer = PaymentSerializer(page, many=True)
             return self.get_paginated_response(serializer.data)
 
-        serializer = PaymentListSerializer(queryset, many=True)
+        serializer = PaymentSerializer(queryset, many=True)
         return Response(serializer.data)
 
 
