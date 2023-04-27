@@ -17,6 +17,10 @@ def create_stripe_session(borrowing: Borrowing) -> Tuple[str, str] | ValidationE
         to_pay = (
             borrowing.expected_return_date - borrowing.borrow_date
         ).days * borrowing.book.daily_fee
+        correct_url = "http://127.0.0.1:8000/api/library/borrowings/" + str(
+            borrowing.id
+        )
+
         checkout_session = stripe.checkout.Session.create(
             line_items=[
                 {
@@ -32,11 +36,10 @@ def create_stripe_session(borrowing: Borrowing) -> Tuple[str, str] | ValidationE
                 }
             ],
             mode="payment",
-            success_url="http://localhost:8000/success/?session_id={CHECKOUT_SESSION_ID}",
-            cancel_url="http://localhost:8000/cancel/?session_id={CHECKOUT_SESSION_ID}",
+            success_url=correct_url + "/success?session_id={CHECKOUT_SESSION_ID}",
+            cancel_url=correct_url + "/cancel?session_id={CHECKOUT_SESSION_ID}",
             expires_at=expiration_time,
         )
-
         return checkout_session.url, checkout_session.id
 
     return ValidationError("Stripe is unavailable, please provide us Stripe creds.")
