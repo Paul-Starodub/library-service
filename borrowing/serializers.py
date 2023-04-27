@@ -24,6 +24,26 @@ def validate_date(attrs: dict, date: str) -> dict:
     return attrs
 
 
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = (
+            "id",
+            "borrowing",
+            "status",
+            "type",
+            "session_url",
+            "session_id",
+            "money_to_pay",
+        )
+
+
+class PaymentCreateSerializer(PaymentSerializer):
+    class Meta:
+        model = Payment
+        fields = ("borrowing", "status", "type", "money_to_pay")
+
+
 class BorrowingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Borrowing
@@ -34,12 +54,14 @@ class BorrowingSerializer(serializers.ModelSerializer):
             "actual_return_date",
             "book",
             "user",
+            "payments",
         )
 
 
 class BorrowingListSerializer(BorrowingSerializer):
     book = serializers.SlugRelatedField(many=False, read_only=True, slug_field="title")
     user = serializers.SlugRelatedField(many=False, read_only=True, slug_field="email")
+    payments = PaymentSerializer(many=True, read_only=True)
 
 
 class BorrowingCreateSerializer(BorrowingSerializer):
@@ -111,21 +133,3 @@ class BorrowingReturnSerializer(BorrowingSerializer):
 
         borrowing = super().update(instance, validated_data)
         return borrowing
-
-
-class PaymentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Payment
-        fields = (
-            "id",
-            "borrowing",
-            "status",
-            "type",
-            "session_url",
-            "session_id",
-            "money_to_pay",
-        )
-
-
-class PaymentListSerializer(PaymentSerializer):
-    borrowing = BorrowingListSerializer()
