@@ -1,5 +1,6 @@
 from typing import Type, Optional
 
+import stripe
 from django.db.models import QuerySet
 from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import extend_schema, OpenApiParameter
@@ -11,7 +12,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 
-from borrowing.models import Borrowing
+from borrowing.models import Borrowing, Payment
 from borrowing.pagination import OrderPagination
 from borrowing.permissions import IsOwnerOrReadOnly
 from borrowing.serializers import (
@@ -23,6 +24,7 @@ from borrowing.serializers import (
     PaymentSerializer,
     PaymentCreateSerializer,
 )
+from borrowing.telegram_notification import borrowing_telegram_notification
 from borrowing.utils import CustomQuerySet
 
 
@@ -36,7 +38,9 @@ class BorrowingViewSet(
     pagination_class = OrderPagination
 
     def get_queryset(self) -> QuerySet:
-        queryset = Borrowing.objects.select_related("book", "user")
+        queryset = Borrowing.objects.select_related("book", "user").prefetch_related(
+            "payments"
+        )
 
         user_id = self.request.query_params.get("user_id")
         is_active = self.request.query_params.get("is_active")
@@ -82,11 +86,42 @@ class BorrowingViewSet(
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    @action(
+        methods=["GET"],
+        detail=True,
+        url_path="success",
+        permission_classes=[IsOwnerOrReadOnly],
+    )
+    def borrowing_is_successfully_paid(
+        self, request: Request, pk: Optional[int] = None
+    ) -> Response:
+        """Success endpoint after paying for the borrowing."""
+
+        borrowing = self.get_object()
+        session_id = request.query_params.get("session_id")
+        payment = Payment.objects.get(session_id=session_id)
+        session = stripe.checkout.Session.retrieve(session_id)
+
+        if session["payment_status"] == "paid":
+            payment.status = "PAID"
+            payment.save()
+
+            borrowing_telegram_notification(
+                message=f"{payment.borrowing.book.title} was paid."
+            )
+            serializer = self.get_serializer(borrowing)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(
+            {"Fail": "Payment wasn't successful."}, status=status.HTTP_400_BAD_REQUEST
+        )
+
     @extend_schema(
         parameters=[
             OpenApiParameter(
                 "is_active",
-                type=OpenApiTypes.BOOL,
+                type=OpenApiTypes.STR,
                 description="Filtering by active borrowing (ex. ?is_active=true)",
             ),
             OpenApiParameter(
