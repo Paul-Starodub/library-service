@@ -117,6 +117,29 @@ class BorrowingViewSet(
             {"Fail": "Payment wasn't successful."}, status=status.HTTP_400_BAD_REQUEST
         )
 
+    @action(
+        methods=["GET"],
+        detail=True,
+        url_path="cancel",
+    )
+    def borrowing_payment_is_cancelled(
+        self, request: Request, pk: Optional[int] = None
+    ) -> Response:
+        """Cancel endpoint for borrowing payment."""
+
+        borrowing = self.get_object()
+        session_id = request.query_params.get("session_id")
+        session = stripe.checkout.Session.retrieve(session_id)
+
+        return Response(
+            {
+                "Cancel": f"The payment for the {borrowing} is cancelled. "
+                f"Make sure to pay during 24 hours. Payment url: "
+                f"{session.url}. Thanks!"
+            },
+            status=status.HTTP_200_OK,
+        )
+
     @extend_schema(
         parameters=[
             OpenApiParameter(
