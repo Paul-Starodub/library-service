@@ -24,6 +24,26 @@ def validate_date(attrs: dict, date: str) -> dict:
     return attrs
 
 
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = (
+            "id",
+            "borrowing",
+            "status",
+            "type",
+            "session_url",
+            "session_id",
+            "money_to_pay",
+        )
+
+
+class PaymentCreateSerializer(PaymentSerializer):
+    class Meta:
+        model = Payment
+        fields = ("borrowing", "status", "type", "money_to_pay")
+
+
 class BorrowingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Borrowing
@@ -34,12 +54,14 @@ class BorrowingSerializer(serializers.ModelSerializer):
             "actual_return_date",
             "book",
             "user",
+            "payments",
         )
 
 
 class BorrowingListSerializer(BorrowingSerializer):
     book = serializers.SlugRelatedField(many=False, read_only=True, slug_field="title")
     user = serializers.SlugRelatedField(many=False, read_only=True, slug_field="email")
+    payments = PaymentSerializer(many=True, read_only=True)
 
 
 class BorrowingCreateSerializer(BorrowingSerializer):
@@ -48,16 +70,16 @@ class BorrowingCreateSerializer(BorrowingSerializer):
 
     @transaction.atomic()
     def create(self, validated_data: dict) -> Borrowing:
-        borrowing = Borrowing.objects.create(**validated_data)
-
         # update book_inventory
-        book = borrowing.book
-
+        book = validated_data.get("book")
         if book.inventory == 0:
             raise serializers.ValidationError("This book is currently out of stock.")
 
         book.inventory -= 1
         book.save()
+
+        # create book
+        borrowing = Borrowing.objects.create(**validated_data)
 
         # getting session_url & session_id
         session_url, session_id = create_stripe_session(borrowing)
@@ -79,7 +101,7 @@ class BorrowingCreateSerializer(BorrowingSerializer):
         )
         borrowing_telegram_notification(message=message)
 
-        return super().create(validated_data)
+        return borrowing
 
     class Meta:
         model = Borrowing
@@ -89,6 +111,7 @@ class BorrowingCreateSerializer(BorrowingSerializer):
 class BorrowingDetailSerializer(BorrowingSerializer):
     book = BookSerializer(many=False, read_only=True)
     user = UserSerializer(many=False, read_only=True)
+    payments = PaymentSerializer(many=True, read_only=True)
 
 
 class BorrowingReturnSerializer(BorrowingSerializer):
@@ -111,21 +134,3 @@ class BorrowingReturnSerializer(BorrowingSerializer):
 
         borrowing = super().update(instance, validated_data)
         return borrowing
-
-
-class PaymentSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Payment
-        fields = (
-            "id",
-            "borrowing",
-            "status",
-            "type",
-            "session_url",
-            "session_id",
-            "money_to_pay",
-        )
-
-
-class PaymentListSerializer(PaymentSerializer):
-    borrowing = BorrowingListSerializer()
