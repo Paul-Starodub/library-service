@@ -26,11 +26,10 @@ class UnAuthenticatedBookApiTests(TestCase):
         self.assertEqual(str(book), "Lion")
 
     def test_validation_daily_fee(self) -> None:
-        book = Book.objects.create(
-            title="Lion", author="Dad", cover="hard", inventory=56, daily_fee=-1
-        )
-
-        try:
+        with self.assertRaisesMessage(
+            ValidationError, "Borrowing cost cannot be less than zero"
+        ):
+            book = Book.objects.create(
+                title="Lion", author="Dad", cover="hard", inventory=56, daily_fee=-4.67
+            )
             book.full_clean()
-        except ValidationError as e:
-            self.assertTrue("Borrowing cost cannot be less than zero", e.message_dict)
