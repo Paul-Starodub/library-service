@@ -132,5 +132,27 @@ class BorrowingReturnSerializer(BorrowingSerializer):
         instance.book.inventory += 1
         instance.book.save()
 
+        return_date = validated_data.get("actual_return_date")
+
+        if return_date > instance.expected_return_date:
+            payment = (
+                instance.payments.first()
+            )  # update existing payment for this borrowing
+            session_url, session_id = create_stripe_session(
+                instance, act_ret_date=return_date
+            )  # create new session for fine
+            payment.session_url = session_url
+            payment.session_id = session_id
+            payment.type = "FINE"
+            payment.save()
+
+            # sending message about fine via telegram bot
+            message = (
+                f"{instance.book.title} was borrowed by the user "
+                f"{instance.user}. Unfortunately, you returned the book at the wrong time. "
+                "Please pay the fine"
+            )
+            borrowing_telegram_notification(message=message)
+
         borrowing = super().update(instance, validated_data)
         return borrowing
