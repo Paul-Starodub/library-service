@@ -1,5 +1,6 @@
 import time
-from typing import Tuple
+from datetime import date
+from typing import Tuple, Optional
 
 import stripe
 from django.conf import settings
@@ -7,16 +8,25 @@ from rest_framework.exceptions import ValidationError
 from borrowing.models import Borrowing
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+FINE_MULTIPLIER = 2  # fine coefficient for overdue days
 
 
-def create_stripe_session(borrowing: Borrowing) -> Tuple[str, str] | ValidationError:
+def create_stripe_session(
+    borrowing: Borrowing, act_ret_date: Optional[date] = None
+) -> Tuple[str, str] | ValidationError:
     if stripe.api_key:
         expiration_time = int(time.time()) + (
             30 * 60
         )  # Set expiration time to 30 minutes from now
+
         to_pay = (
             borrowing.expected_return_date - borrowing.borrow_date
         ).days * borrowing.book.daily_fee
+
+        if act_ret_date is not None and act_ret_date > borrowing.expected_return_date:
+            count_fine_days = (act_ret_date - borrowing.expected_return_date).days
+            to_pay = FINE_MULTIPLIER * count_fine_days * borrowing.book.daily_fee
+
         correct_url = "http://127.0.0.1:8000/api/library/borrowings/" + str(
             borrowing.id
         )
