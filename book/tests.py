@@ -1,8 +1,10 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from book.models import Book
 
 BOOKS_URL = reverse("library:book-list")
 
@@ -15,3 +17,20 @@ class UnAuthenticatedBookApiTests(TestCase):
         response = self.client.get(BOOKS_URL)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_str_method(self) -> None:
+        book = Book.objects.create(
+            title="Lion", author="Dad", cover="hard", inventory=12, daily_fee=12.08
+        )
+
+        self.assertEqual(str(book), "Lion")
+
+    def test_validation_daily_fee(self) -> None:
+        book = Book.objects.create(
+            title="Lion", author="Dad", cover="hard", inventory=56, daily_fee=-1
+        )
+
+        try:
+            book.full_clean()
+        except ValidationError as e:
+            self.assertTrue("Borrowing cost cannot be less than zero", e.message_dict)
