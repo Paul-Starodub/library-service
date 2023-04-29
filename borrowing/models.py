@@ -70,7 +70,7 @@ class Borrowing(models.Model):
         return f"{self.user}: {self.book.title}"
 
     class Meta:
-        ordering = ["-borrow_date"]
+        ordering = ["-id"]
 
 
 class Payment(models.Model):
