@@ -94,7 +94,7 @@ class Payment(models.Model):
     money_to_pay = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
-        return f"Payment {self.id} ({self.borrowing.book.title})"
+        return f"Payment ({self.borrowing.book.title})"
 
     class Meta:
         ordering = ["-id"]
