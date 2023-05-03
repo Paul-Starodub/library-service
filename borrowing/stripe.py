@@ -27,9 +27,7 @@ def create_stripe_session(
             count_fine_days = (act_ret_date - borrowing.expected_return_date).days
             to_pay = FINE_MULTIPLIER * count_fine_days * borrowing.book.daily_fee
 
-        correct_url = "http://127.0.0.1:8000/api/library/borrowings/" + str(
-            borrowing.id
-        )
+        correct_url = "http://0.0.0.0:8000/api/library/borrowings/" + str(borrowing.id)
 
         checkout_session = stripe.checkout.Session.create(
             line_items=[
