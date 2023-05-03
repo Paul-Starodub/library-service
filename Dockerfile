@@ -11,4 +11,12 @@ COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
+RUN adduser \
+    --disabled-password \
+    --no-create-home \
+    django-user
+
+
+USER django-user
+
 COPY . /code/
