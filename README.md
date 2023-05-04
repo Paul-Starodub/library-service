@@ -37,7 +37,6 @@ Open file .env.sample and change environment variables to yours. Also rename fil
 - Connect DB
 - Run:
 ```
-python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```
