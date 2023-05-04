@@ -19,8 +19,10 @@ class Book(models.Model):
         return self.title
 
     class Meta:
-        CheckConstraint(
-            check=Q(daily_fee__gte=0),
-            name="daily_fee_gte_0",
-            violation_error_message="Borrowing cost cannot be less than zero",
-        )
+        constraints = [
+            CheckConstraint(
+                check=Q(daily_fee__gte=0),
+                name="daily_fee_gte_0",
+                violation_error_message="Borrowing cost cannot be less than zero",
+            )
+        ]
