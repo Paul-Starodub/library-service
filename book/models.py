@@ -1,10 +1,5 @@
 from django.db import models
-from django.core.exceptions import ValidationError
-
-
-def validate_daily_fee(daily_fee: float) -> None:
-    if daily_fee < 0:
-        raise ValidationError("Borrowing cost cannot be less than zero")
+from django.db.models import CheckConstraint, Q
 
 
 class Book(models.Model):
@@ -18,9 +13,14 @@ class Book(models.Model):
     author = models.CharField(max_length=128)
     cover = models.CharField(max_length=4, choices=Enum.choices)
     inventory = models.PositiveIntegerField()
-    daily_fee = models.DecimalField(
-        max_digits=5, decimal_places=2, validators=[validate_daily_fee]
-    )
+    daily_fee = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self) -> str:
         return self.title
+
+    class Meta:
+        CheckConstraint(
+            check=Q(daily_fee__gte=0),
+            name="daily_fee_gte_0",
+            violation_error_message="Borrowing cost cannot be less than zero",
+        )
