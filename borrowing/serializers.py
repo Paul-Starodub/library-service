@@ -2,26 +2,13 @@ import datetime
 
 from django.db import transaction
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from book.serializers import BookSerializer
 from borrowing.models import Borrowing, Payment
 from borrowing.stripe import create_stripe_session
 from borrowing.telegram_notification import borrowing_telegram_notification
 from user.serializers import UserSerializer
-
-
-def validate_date(attrs: dict, date: str) -> dict:
-    """Checking the correctness of the date at the api level"""
-
-    if attrs[date] is None:
-        raise serializers.ValidationError("You need to enter a date.")
-
-    if attrs[date] <= datetime.date.today():
-        raise serializers.ValidationError(
-            f"You should take expected return date later than {datetime.date.today()}."
-        )
-
-    return attrs
 
 
 class PaymentSerializer(serializers.ModelSerializer):
@@ -65,8 +52,15 @@ class BorrowingListSerializer(BorrowingSerializer):
 
 
 class BorrowingCreateSerializer(BorrowingSerializer):
-    def validate(self, attrs: dict) -> dict:
-        return validate_date(attrs=attrs, date="expected_return_date")
+    def validate_expected_return_date(
+        self, value: datetime.date
+    ) -> ValidationError | datetime.date:
+        if value <= datetime.date.today():
+            raise serializers.ValidationError(
+                f"You should take expected return date later than {datetime.date.today()}."
+            )
+
+        return value
 
     @transaction.atomic()
     def create(self, validated_data: dict) -> Borrowing:
@@ -115,12 +109,18 @@ class BorrowingDetailSerializer(BorrowingSerializer):
 
 
 class BorrowingReturnSerializer(BorrowingSerializer):
-    def validate(self, attrs: dict) -> dict:
-        return validate_date(attrs=attrs, date="actual_return_date")
+    def validate_actual_return_date(
+        self, value: datetime.date
+    ) -> ValidationError | datetime.date:
+        if value is None:
+            raise serializers.ValidationError("You need to enter a date.")
 
-    class Meta:
-        model = Borrowing
-        fields = ("id", "actual_return_date")
+        if value <= datetime.date.today():
+            raise serializers.ValidationError(
+                f"You should take actual return date later than {datetime.date.today()}."
+            )
+
+        return value
 
     @transaction.atomic()
     def update(self, instance: Borrowing, validated_data: dict) -> Borrowing:
@@ -156,3 +156,7 @@ class BorrowingReturnSerializer(BorrowingSerializer):
 
         borrowing = super().update(instance, validated_data)
         return borrowing
+
+    class Meta:
+        model = Borrowing
+        fields = ("id", "actual_return_date")
