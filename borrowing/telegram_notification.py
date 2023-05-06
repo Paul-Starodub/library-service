@@ -1,10 +1,8 @@
-import requests
+import telegram
 
 from library_service import settings
 
 
-def borrowing_telegram_notification(message: str) -> str:
-    params = {"chat_id": settings.TELEGRAM_CHAT_ID, "text": message}
-    url_result = f"https://api.telegram.org/bot{settings.TELEGRAM_TOKEN}/sendMessage"
-    result = requests.get(url_result, params=params).json()
-    return result
+async def send_message(message: str) -> None:
+    bot = telegram.Bot(token=settings.TELEGRAM_TOKEN)
+    await bot.send_message(chat_id=settings.TELEGRAM_CHAT_ID, text=message)
