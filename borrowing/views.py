@@ -1,3 +1,4 @@
+import asyncio
 from typing import Type, Optional
 
 import stripe
@@ -24,7 +25,7 @@ from borrowing.serializers import (
     PaymentSerializer,
     PaymentCreateSerializer,
 )
-from borrowing.telegram_notification import borrowing_telegram_notification
+from borrowing.telegram_notification import send_message
 
 
 class BorrowingViewSet(
@@ -103,9 +104,8 @@ class BorrowingViewSet(
             payment.status = "PAID"
             payment.save()
 
-            borrowing_telegram_notification(
-                message=f"{payment.borrowing.book.title} was paid."
-            )
+            message = f"{payment.borrowing.book.title} was paid."
+            asyncio.run(send_message(message=message))
             serializer = self.get_serializer(borrowing)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
