@@ -4,16 +4,8 @@ from typing import Optional, Type
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import QuerySet
 
 from book.models import Book
-
-
-class CustomBorrowingManager(models.Manager):
-    """Manager for reduce queries for db"""
-
-    def all(self) -> QuerySet["Borrowing"]:
-        return self.get_queryset().select_related("book", "user")
 
 
 class Borrowing(models.Model):
@@ -26,8 +18,6 @@ class Borrowing(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="borrowings"
     )
-
-    objects = CustomBorrowingManager()
 
     def validate_return_dates(
         self,

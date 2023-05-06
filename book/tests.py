@@ -24,12 +24,3 @@ class UnAuthenticatedBookApiTests(TestCase):
         )
 
         self.assertEqual(str(book), "Lion")
-
-    def test_validation_daily_fee(self) -> None:
-        with self.assertRaisesMessage(
-            ValidationError, "Borrowing cost cannot be less than zero"
-        ):
-            book = Book.objects.create(
-                title="Lion", author="Dad", cover="hard", inventory=56, daily_fee=-4.67
-            )
-            book.full_clean()

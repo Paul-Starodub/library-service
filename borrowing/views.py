@@ -1,3 +1,4 @@
+import asyncio
 from typing import Type, Optional
 
 import stripe
@@ -24,8 +25,7 @@ from borrowing.serializers import (
     PaymentSerializer,
     PaymentCreateSerializer,
 )
-from borrowing.telegram_notification import borrowing_telegram_notification
-from borrowing.utils import CustomQuerySet
+from borrowing.telegram_notification import send_message
 
 
 class BorrowingViewSet(
@@ -66,16 +66,14 @@ class BorrowingViewSet(
         if self.action == "create":
             return BorrowingCreateSerializer
 
-        if self.action == "return_borrowing":
-            return BorrowingReturnSerializer
-
-        return self.serializer_class
+        return super().get_serializer_class()
 
     @action(
         methods=["POST"],
         detail=True,
         url_path="return",
         permission_classes=[IsOwnerOrReadOnly],
+        serializer_class=BorrowingReturnSerializer,
     )
     def return_borrowing(self, request: Request, pk: Optional[int] = None) -> Response:
         """Endpoint for returning a borrowed book"""
@@ -106,9 +104,8 @@ class BorrowingViewSet(
             payment.status = "PAID"
             payment.save()
 
-            borrowing_telegram_notification(
-                message=f"{payment.borrowing.book.title} was paid."
-            )
+            message = f"{payment.borrowing.book.title} was paid."
+            asyncio.run(send_message(message=message))
             serializer = self.get_serializer(borrowing)
 
             return Response(serializer.data, status=status.HTTP_200_OK)
@@ -161,9 +158,19 @@ class BorrowingViewSet(
         serializer.save(user=self.request.user)
 
 
-class PaymentListView(CustomQuerySet, generics.ListCreateAPIView):
+class PaymentListView(generics.ListCreateAPIView):
+    queryset = Payment.objects.select_related("borrowing__user", "borrowing__book")
     serializer_class = PaymentCreateSerializer
     pagination_class = OrderPagination
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return super().get_queryset()
+        if self.request.user.is_authenticated:
+            return (
+                super().get_queryset().filter(borrowing__user_id=self.request.user.id)
+            )
+        return super().get_queryset()
 
     def create(
         self, request: Request, *args: tuple, **kwargs: dict
@@ -184,10 +191,7 @@ class PaymentListView(CustomQuerySet, generics.ListCreateAPIView):
         )
 
     def list(self, request: Request, *args: tuple, **kwargs: dict) -> Response:
-        queryset = self.filter_queryset(self.get_queryset()).select_related(
-            "borrowing__book", "borrowing__user"
-        )
-
+        queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         if page is not None:
             serializer = PaymentSerializer(page, many=True)
@@ -197,5 +201,15 @@ class PaymentListView(CustomQuerySet, generics.ListCreateAPIView):
         return Response(serializer.data)
 
 
-class PaymentDetailView(CustomQuerySet, generics.RetrieveAPIView):
+class PaymentDetailView(generics.RetrieveAPIView):
+    queryset = Payment.objects.select_related("borrowing__user", "borrowing__book")
     serializer_class = PaymentSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_staff:
+            return super().get_queryset()
+        if self.request.user.is_authenticated:
+            return (
+                super().get_queryset().filter(borrowing__user_id=self.request.user.id)
+            )
+        return super().get_queryset()
