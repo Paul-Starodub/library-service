@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 
 from django.db import transaction
@@ -7,7 +8,7 @@ from rest_framework.exceptions import ValidationError
 from book.serializers import BookSerializer
 from borrowing.models import Borrowing, Payment
 from borrowing.stripe import create_stripe_session
-from borrowing.telegram_notification import borrowing_telegram_notification
+from borrowing.telegram_notification import send_message
 from user.serializers import UserSerializer
 
 
@@ -93,7 +94,7 @@ class BorrowingCreateSerializer(BorrowingSerializer):
             f"{book.title} was borrowed by the user "
             f"{validated_data.get('user')}. Expected return date {validated_data.get('expected_return_date')}"
         )
-        borrowing_telegram_notification(message=message)
+        asyncio.run(send_message(message=message))
 
         return borrowing
 
@@ -152,7 +153,7 @@ class BorrowingReturnSerializer(BorrowingSerializer):
                 f"{instance.user}. Unfortunately, you returned the book at the wrong time. "
                 "Please pay the fine"
             )
-            borrowing_telegram_notification(message=message)
+            asyncio.run(send_message(message=message))
 
         borrowing = super().update(instance, validated_data)
         return borrowing
