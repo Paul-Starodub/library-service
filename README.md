@@ -40,7 +40,7 @@ Open file .env.sample and change environment variables to yours. Also rename fil
 python manage.py migrate
 python manage.py runserver
 ```
-- You can download test texture:
+- You can download test fixture:
 ```
 python manage.py dumpdata --indent 4 > library.json
 ```
