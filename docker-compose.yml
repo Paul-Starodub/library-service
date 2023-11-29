@@ -49,6 +49,7 @@ services:
     command: >
       sh -c "python manage.py wait_for_db &&
             celery -A library_service beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+    depends_on:
       - web
       - redis
       - db
