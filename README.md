@@ -42,7 +42,7 @@ python manage.py runserver
 ```
 - You can download test fixture:
 ```
-python manage.py dumpdata --indent 4 > library.json
+python manage.py loadddata library.json
 ```
 ***
 # Run with Docker
